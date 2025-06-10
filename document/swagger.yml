@@ -1,0 +1,68 @@
+swagger: "2.0"
+
+info:
+  version: "1.0.0"
+  title: LinTo-Platform-Diarization
+  description: Diarization API
+  contact:
+    email: "support@linto.ai"
+  license:
+    name: "AGPLv3"
+    url: "https://www.gnu.org/licenses/agpl-3.0.en.html"
+
+schemes:
+  - http
+basePath: /
+
+paths:
+  /diarization:
+    post:
+      tags:
+        - "Diarization API"
+      summary: Perform Speaker Diarization
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "file"
+        in: "formData"
+        description: "Audio File - WaveFile"
+        required: true
+        type: "file"
+      - name: "speaker_count"
+        in: "formData"
+        description: "Fixed number of speakers (Optional)"
+        required: false
+        type: integer
+      - name: "max_speaker"
+        in: "formData"
+        description: "Maximum number of speakers, if the number of speakers is unknown"
+        required: false
+        type: integer      
+      - name: "speaker_names"
+        description: "List of candidate speakers (if samples were provided to perform speaker identification)"
+        in: formData
+        type: string        
+      responses:
+        200:
+          description: Successfully transcribe the audio
+        400:
+          description: Request error
+        500:
+          description: Server error
+     
+  /healthcheck:
+    get:
+      tags:
+        - "Health"
+      summary: Check server health
+      consumes:
+      - "application/json"
+      responses:
+        200:
+          description: Healthcheck passes
+        400:
+          description: Healthcheck fails
+        500:
+          description: Healthcheck fails
