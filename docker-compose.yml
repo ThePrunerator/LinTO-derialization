@@ -18,6 +18,7 @@ services:
     ports :
       - 8080:80
     environment:
+      - DEVICE=${DEVICE:-cpu}
       - QDRANT_HOST
       - QDRANT_PORT
       - QDRANT_COLLECTION_NAME
@@ -38,3 +39,4 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+    profiles: ["gpu"]
